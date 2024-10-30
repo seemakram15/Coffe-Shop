@@ -1,24 +1,33 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Project Overview
+This project is a Coffee Shop system built with Ruby on Rails. Users can browse items by categories, add items to their cart, view cart details with taxes and discounts, and place orders. The application also provides a basic customer management system and order history.
 
-Things you may want to cover:
+# Technologies Used
+Ruby Version: 2.5.0
+Rails Version: 5.2
+Database: PostgreSQL
+Front-end: ERB templates with basic HTML/CSS
+Server: Puma (default for Rails)
 
-* Ruby version
+# Installation and Setup Instructions
 
-* System dependencies
+Clone the Repository:
+git clone https://github.com/seemakram15/Coffe-Shop.git
+cd Coffe-Shop
 
-* Configuration
+Install Dependencies:
+bundle install
 
-* Database creation
+Set up PostgreSQL Database:
+Make sure PostgreSQL is installed and running. Create the database:
+rails db:create
+rails db:migrate
 
-* Database initialization
 
-* How to run the test suite
+Seed the Database:
+I am creating Categories and a sample user through Seed, so after migrating the database, you need to run it.
+rails db:seed
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Start the Rails Server:
+rails server
