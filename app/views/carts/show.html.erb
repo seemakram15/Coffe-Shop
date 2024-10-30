@@ -1,0 +1,46 @@
+<h1><%= @user.first_name %>'s Cart</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Tax (%)</th>
+      <th>Discount (%)</th>
+      <th>Total Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cart_items.each do |cart_item| %>
+      <% item_price = cart_item.item.price %>
+      <% item_tax = cart_item.item.tax %>
+      <% item_discount_percentage = cart_item.item.discount %>
+      
+      <% discount_amount = item_price * (item_discount_percentage / 100.0) %>
+      <% total_price_before_tax = item_price - discount_amount %>
+      <% total_price = total_price_before_tax + (total_price_before_tax * item_tax / 100) %>
+      <% total_item_price = total_price * cart_item.quantity %>
+
+      <tr>
+        <td style="padding: 10px;"><%= cart_item.item.name %></td>
+        <td style="padding: 10px;"><%= cart_item.quantity %></td>
+        <td style="padding: 10px;"><%= number_to_currency(item_price) %></td>
+        <td style="padding: 10px;"><%= item_tax %>%</td>
+        <td style="padding: 10px;"><%= item_discount_percentage %>%</td>
+        <td style="padding: 10px;"><%= number_to_currency(total_item_price) %></td>
+        <td style="padding: 10px;">
+          <%= button_to 'Add', user_cart_path(@user, item_id: cart_item.item.id, quantity: 1), method: :patch %>
+          <%= button_to 'Remove', user_cart_path(@user, item_id: cart_item.item.id, quantity: -1), method: :patch %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>Grand Total: <%= number_to_currency(@cart.grand_total) %></h3>
+
+<%= button_to 'Place Order', user_orders_path(@user), method: :post, class: 'btn btn-primary' %>
+
+<%= link_to 'Back to Order Items', new_user_order_path(@user), class: 'btn btn-secondary' %>

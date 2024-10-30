@@ -1,0 +1,20 @@
+<h1>Place Order for <%= @user.first_name %> <%= @user.last_name %></h1>
+
+<div id="items-container">
+  <% @categories.each do |category| %>
+    <h2><%= category.name %></h2>
+    <div class="items-list">
+      <% category.items.each do |item| %>
+        <div class="item">
+          <span><%= item.name %> - $<%= item.price %></span>
+          <%= form_with url: user_cart_path(@user), method: :post, local: true do %>
+            <%= hidden_field_tag 'item_id', item.id %>
+            <%= submit_tag 'Add', class: 'btn btn-success' %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to 'Go to Cart', user_cart_path(@user), class: 'btn btn-primary' %>
